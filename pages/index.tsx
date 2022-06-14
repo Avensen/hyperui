@@ -1,50 +1,25 @@
 import type { NextPage } from 'next'
 
-import { ComponentCard } from '../interface/component'
-
-import {
-  getMarketingComponents,
-  getEcommerceComponents,
-  getApplicationComponents,
-} from '../lib/components'
+import { getCollections } from '../lib/collections'
 
 import Banner from '../components/content/banner'
-import Grid from '../components/collection/grid'
+import Card from '../components/collection/card'
 
 export async function getStaticProps() {
-  const componentData = [
-    'title',
-    'slug',
-    'emoji',
-    'count',
-    'ecommerce',
-    'application',
-    'tags',
-  ]
-  const componentsMarketing = getMarketingComponents(componentData)
-  const componentsEcommerce = getEcommerceComponents(componentData)
-  const componentsApplication = getApplicationComponents(componentData)
+  const marketingCollections = getCollections(['title', 'components'])
 
   return {
     props: {
-      componentsMarketing,
-      componentsEcommerce,
-      componentsApplication,
+      marketingCollections,
     },
   }
 }
 
 type Props = {
-  componentsMarketing: Array<ComponentCard>
-  componentsEcommerce: Array<ComponentCard>
-  componentsApplication: Array<ComponentCard>
+  marketingCollections: Array<any>
 }
 
-const Home: NextPage<Props> = ({
-  componentsMarketing,
-  componentsEcommerce,
-  componentsApplication,
-}) => {
+const Home: NextPage<Props> = ({ marketingCollections }) => {
   return (
     <>
       <Banner
@@ -60,21 +35,19 @@ const Home: NextPage<Props> = ({
         <div className="space-y-4">
           <h2 className="text-lg font-bold sm:text-xl">Marketing Components</h2>
 
-          <Grid items={componentsMarketing} />
-        </div>
+          {marketingCollections.map((collection) => {
+            return (
+              <div key={collection.title}>
+                <h2>{collection.title}</h2>
 
-        <div className="space-y-4">
-          <h2 className="text-lg font-bold sm:text-xl">Ecommerce Components</h2>
-
-          <Grid items={componentsEcommerce} />
-        </div>
-
-        <div className="space-y-4">
-          <h2 className="text-lg font-bold sm:text-xl">
-            Application UI Components
-          </h2>
-
-          <Grid items={componentsApplication} />
+                <ul className="grid grid-cols-5 gap-8">
+                  {collection.children.map((component) => (
+                    <Card key={component.title} item={component} />
+                  ))}
+                </ul>
+              </div>
+            )
+          })}
         </div>
       </div>
     </>

@@ -3,26 +3,36 @@ import type { NextPage } from 'next'
 import { ComponentCard } from '../interface/component'
 import { Collection } from '../interface/collection'
 
-import { getCollections } from '../lib/collections'
-
 import Banner from '../components/content/banner'
 import Card from '../components/collection/card'
+import { categorySlugs, getCategoryBySlug } from '../lib/categories'
+import Listing from '../components/category/Listing'
 
 export async function getStaticProps() {
-  const marketingCollections = getCollections(['title', 'components'])
+  const marketingCategory = getCategoryBySlug('marketing', [
+    'title',
+    'collections',
+  ])
+
+  const applicationCategory = getCategoryBySlug('application', [
+    'title',
+    'collections',
+  ])
 
   return {
     props: {
-      marketingCollections,
+      marketingCategory,
+      applicationCategory,
     },
   }
 }
 
 type Props = {
-  marketingCollections: Array<Collection>
+  marketingCategory: any
+  applicationCategory: any
 }
 
-const Home: NextPage<Props> = ({ marketingCollections }) => {
+const Home: NextPage<Props> = ({ marketingCategory, applicationCategory }) => {
   return (
     <>
       <Banner
@@ -35,23 +45,15 @@ const Home: NextPage<Props> = ({ marketingCollections }) => {
       </Banner>
 
       <div className="max-w-screen-xl px-4 py-8 mx-auto space-y-8">
-        <div className="space-y-4">
-          <h2 className="text-lg font-bold sm:text-xl">Marketing Components</h2>
+        <Listing
+          title={marketingCategory.title}
+          collections={marketingCategory.children}
+        />
 
-          {marketingCollections.map((collection: Collection) => {
-            return (
-              <div key={collection.title}>
-                <h2>{collection.title}</h2>
-
-                <ul className="grid grid-cols-5 gap-8">
-                  {collection.children.map((component: ComponentCard) => (
-                    <Card key={component.title} item={component} />
-                  ))}
-                </ul>
-              </div>
-            )
-          })}
-        </div>
+        <Listing
+          title={applicationCategory.title}
+          collections={applicationCategory.children}
+        />
       </div>
     </>
   )

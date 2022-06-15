@@ -1,12 +1,9 @@
 import type { NextPage } from 'next'
 
-import { ComponentCard } from '../interface/component'
-import { Collection } from '../interface/collection'
+import { getCategoryBySlug } from '../lib/categories'
 
 import Banner from '../components/content/banner'
-import Card from '../components/collection/card'
-import { categorySlugs, getCategoryBySlug } from '../lib/categories'
-import Listing from '../components/category/Listing'
+import Listing from '../components/category/listing'
 
 export async function getStaticProps() {
   const marketingCategory = getCategoryBySlug('marketing', [

@@ -1,6 +1,8 @@
 import type { FunctionComponent } from 'react'
+
 import { Collection } from '../../interface/collection'
 import { ComponentCard } from '../../interface/component'
+
 import Card from '../collection/card'
 
 type Props = {

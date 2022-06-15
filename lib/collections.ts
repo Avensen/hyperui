@@ -23,7 +23,7 @@ export function getCollectionBySlug(slug: string, fields: string[] = []) {
 
   fields.forEach((field) => {
     if (field === 'components') {
-      items['children'] = data.components.map((component) =>
+      items['children'] = data.components.map((component: string) =>
         getComponentBySlug(component, [
           'title',
           'slug',

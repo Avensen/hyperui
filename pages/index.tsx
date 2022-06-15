@@ -32,13 +32,11 @@ type Props = {
 const Home: NextPage<Props> = ({ marketingCategory, applicationCategory }) => {
   return (
     <>
-      <Banner
-        title="HyperUI"
-        subtitle="Free Open Source Tailwind CSS Components"
-      >
-        HyperUI is a collection of free Tailwind CSS components that can be used
-        in your next project. With a range of components, you can build your
-        next marketing website, admin dashboard, ecommerce store and much more.
+      <Banner title="Open Source Tailwind CSS Components" subtitle="HyperUI">
+        HyperUI is an open source Tailwind CSS component library featuring over
+        200+ components. As HyperUI is open source these components are free to
+        use. It also means that you are welcome to create a pull request and add
+        your own components 🥳.
       </Banner>
 
       <div className="max-w-screen-xl px-4 py-8 mx-auto space-y-8">

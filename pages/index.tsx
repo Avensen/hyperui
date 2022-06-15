@@ -1,5 +1,8 @@
 import type { NextPage } from 'next'
 
+import { ComponentCard } from '../interface/component'
+import { Collection } from '../interface/collection'
+
 import { getCollections } from '../lib/collections'
 
 import Banner from '../components/content/banner'
@@ -16,7 +19,7 @@ export async function getStaticProps() {
 }
 
 type Props = {
-  marketingCollections: Array<any>
+  marketingCollections: Array<Collection>
 }
 
 const Home: NextPage<Props> = ({ marketingCollections }) => {
@@ -35,13 +38,13 @@ const Home: NextPage<Props> = ({ marketingCollections }) => {
         <div className="space-y-4">
           <h2 className="text-lg font-bold sm:text-xl">Marketing Components</h2>
 
-          {marketingCollections.map((collection) => {
+          {marketingCollections.map((collection: Collection) => {
             return (
               <div key={collection.title}>
                 <h2>{collection.title}</h2>
 
                 <ul className="grid grid-cols-5 gap-8">
-                  {collection.children.map((component) => (
+                  {collection.children.map((component: ComponentCard) => (
                     <Card key={component.title} item={component} />
                   ))}
                 </ul>
